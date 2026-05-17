@@ -10,20 +10,9 @@ const { errorHandler } = require('./middleware/errorHandler');
 const app = express();
 
 // ─── Core middleware ───────────────────────────────────────────────────────
-const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://localhost:5174',
-  'http://127.0.0.1:5174',
-];
-
+// Enable dynamic CORS mapping for seamless frontend-backend integration across local and Vercel hosting.
 app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error(`CORS blocked origin: ${origin}`));
-  },
+  origin: true,
   credentials: true,
 }));
 app.use(express.json());
